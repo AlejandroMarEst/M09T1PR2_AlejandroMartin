@@ -1,0 +1,6 @@
+@M09T1PR2API_AlejandroMartin_HostAddress = http://localhost:5164
+
+GET {{M09T1PR2API_AlejandroMartin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
