@@ -28,7 +28,7 @@
                         @if (loggedIn)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Logout">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserLogout">
                                     <i class="bi bi-person">Tancar sessio</i>
                                 </a>
                             </li>
@@ -37,12 +37,12 @@
                         else
                         {
                             <li class="nav-item flex-display">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserLogin">
                                     <i class="bi bi-person">Login</i>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Register">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserRegister">
                                     <i class="bi bi-person">Registrar-se</i>
                                 </a>
                             </li>
