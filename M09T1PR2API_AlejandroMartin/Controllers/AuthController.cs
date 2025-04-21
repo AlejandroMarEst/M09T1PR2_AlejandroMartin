@@ -1,5 +1,6 @@
 ﻿using M09T1PR2API_AlejandroMartin.DTOs;
 using M09T1PR2API_AlejandroMartin.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -71,6 +72,13 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
             }
             var token = CreateToken(claims.ToArray());
             return Ok(token);
+        }
+        [Authorize]
+        [HttpGet("GetName")]
+        public async Task<IActionResult> GetName()
+        {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
+            return Ok(userName);
         }
         private string CreateToken(Claim[] claims) // Creates the token for the current user
         {
