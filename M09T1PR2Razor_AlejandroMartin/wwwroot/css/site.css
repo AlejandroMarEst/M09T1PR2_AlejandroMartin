@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,6 +29,11 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.game-img-detailed {
+    height: 500px;
+    width: 500px;
 }
 
 .game-img{

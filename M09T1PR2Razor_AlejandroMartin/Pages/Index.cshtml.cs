@@ -37,4 +37,8 @@ public class IndexModel : PageModel
             _logger.LogError(ex.Message);
         }
     }
+    public IActionResult OnPostGameInfo(int id)
+    {
+        return RedirectToPage("GameInfo", "Game", new { id = id });
+    }
 }

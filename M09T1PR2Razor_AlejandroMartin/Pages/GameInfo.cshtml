@@ -1,0 +1,14 @@
+﻿@page
+@model M09T1PR2Razor_AlejandroMartin.Pages.GameInfoModel
+@{
+	ViewData["Title"] = "Game info";
+}
+<div class="text-center">
+	<h1 class="display-4">@Model.Game.Title</h1>
+</div>
+	<img src="@Model.Game.Img" alt="Game Image" class="game-img-info" />
+	<div class="text-center">
+		<p>Developed by: @Model.Game.Dev</p>
+		<p>Description: @Model.Game.Description</p>
+	</div>
+ 

@@ -3,26 +3,27 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div class="text-center">
 	<h1 class="display-3">Welcome to the ITB GameJam 2025!</h1>
-	<h2 class="display-4"> Here are the top 10 most voted games:</h2>
-</div>
-<div class="flex-display flex-lg-wrap">
-	@if (!Model.Games.Any())
-	{
-		<p>No games were found</p>
-	}
-	else
-	{
-		@foreach (var game in Model.Games)
+	<h2 class="display-4"> Here are the top 10 most voted games:</h2>1>
+	<div class="flex-display flex-lg-wrap justify-content-center">
+		@if (!Model.Games.Any())
 		{
-			<div class="flex-display flex-column p-4 text-center">
-				<img src="@game.Img" class="game-img" />
-				<h3>@game.Title</h3>
-				<h3>@game.Dev</h3>
-				<h3>Vote placeholder</h3>
-			</div>
+			<p>There are no games</p>
 		}
-	}
+		else
+		{
+			@foreach (var game in Model.Games)
+			{
+				<form method="post" asp-handler="GameInfo">
+					<button type="submit" asp-page-handler="gameInfo" asp-route-id="@game.Id">
+						<div class="flex-display flex-column p-4 text-center">
+							<img src="@game.Img" alt="Game Image" class="game-img" />
+							<p>@game.Title</p>
+						</div>
+					</button>
+				</form>
+			}
+		}
+	</div>
 </div>
