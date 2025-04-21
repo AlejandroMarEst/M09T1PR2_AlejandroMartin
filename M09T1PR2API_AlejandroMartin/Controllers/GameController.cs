@@ -18,6 +18,17 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
             _context = context;
         }
 
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<Game>> GetGame(int Id)
+        {
+            var game = await _context.Games.FirstOrDefaultAsync(x => x.Id == Id);
+            if (game == null)
+            {
+                return NotFound("Game not found");
+            }
+            return Ok(game);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetAllGames()
         {
