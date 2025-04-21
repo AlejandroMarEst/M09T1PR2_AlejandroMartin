@@ -43,12 +43,12 @@ namespace M09T1PR2Razor_AlejandroMartin.Pages
             {
                 _logger.LogError(ex.Message);
             }
-            var votes = await client.GetAsync($"api/GameVotes/GetVotes/{id}");
+            var votes = await client.GetAsync($"api/Voting/GetVotes/{id}");
             Votes = Convert.ToInt32(await votes.Content.ReadAsStringAsync());
             if (LoggedIn)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("AuthToken"));
-                var response = await client.GetAsync("api/GameVotes/GetVotes");
+                var response = await client.GetAsync("api/Voting/GetVotes");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -70,7 +70,7 @@ namespace M09T1PR2Razor_AlejandroMartin.Pages
         {
             var client = _httpClientFactory.CreateClient("GameApi");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("AuthToken"));
-            var response = await client.PostAsJsonAsync("api/GameVotes/Vote", gameId);
+            var response = await client.PostAsJsonAsync("api/Voting/Vote", gameId);
             return RedirectToPage("GameInfo", new { id = gameId });
         }
 
@@ -78,7 +78,7 @@ namespace M09T1PR2Razor_AlejandroMartin.Pages
         {
             var client = _httpClientFactory.CreateClient("GameApi");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("AuthToken"));
-            var response = await client.PostAsJsonAsync($"api/GameVotes/Unvote", gameId);
+            var response = await client.PostAsJsonAsync($"api/Voting/Unvote", gameId);
             return RedirectToPage("GameInfo", new { id = gameId });
         }
     }

@@ -21,7 +21,7 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
 
         [Authorize]
         [HttpPost("Vote")]
-        public async Task<ActionResult> PostVote(int gameId)
+        public async Task<ActionResult> PostVote([FromBody]int gameId)
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var Vote = new GameVoting
@@ -36,7 +36,7 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
 
         [Authorize]
         [HttpPost("Unvote")]
-        public async Task<ActionResult> PostUnvote(int gameId)
+        public async Task<ActionResult> PostUnvote([FromBody]int gameId)
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var Vote = await _context.GameVotes.FirstOrDefaultAsync(x => x.GameId == gameId && x.UserId == user);
@@ -53,13 +53,13 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
         [HttpGet("GetVotes")]
         public async Task<ActionResult<IEnumerable<GameVoting>>> GetVotes()
         {
-            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var Votes = await _context.GameVotes.Where(x => x.UserId == user).ToListAsync();
-            if (Votes.Count == 0)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var gameVotes = await _context.GameVotes.Where(x => x.UserId == userId).ToListAsync();
+            if (gameVotes.Count == 0)
             {
                 return NotFound("No votes found");
             }
-            return Ok(Votes);
+            return Ok(gameVotes);
         }
 
         [HttpGet("GetVotes/{gameId}")]
