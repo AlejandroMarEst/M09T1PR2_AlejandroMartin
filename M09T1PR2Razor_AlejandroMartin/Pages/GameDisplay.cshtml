@@ -1,0 +1,21 @@
+﻿@page
+@model M09T1PR2Razor_AlejandroMartin.Pages.GameDisplayModel
+@{
+	ViewData["Title"] = "Games";
+}
+<div class="flex-display flex-lg-wrap">
+	@if (!Model.GameList.Any())
+	{
+		<p>There are no games</p>
+	}
+	else
+	{
+		@foreach (var game in Model.GameList)
+		{
+			<div class="flex-display flex-column p-4 text-center">
+				<img src="@game.Img" class="game-img" />
+				<p>@game.Title</p>
+			</div>
+		}
+	}
+</div>
