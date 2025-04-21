@@ -1,0 +1,43 @@
+﻿@page
+@model M09T1PR2Razor_AlejandroMartin.Pages.ChatModel
+@{
+    ViewData["Title"] = "Chat";
+}
+<h2>Chat</h2>
+
+<label for="msg">Message:</label>
+<input id="msg" placeholder="Write to the world here..." />
+<button onclick="sendMsg()">Send</button>
+
+<ul id="msgs"></ul>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        // Create connection to the server
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7178/Chat")
+            .withAutomaticReconnect()
+            .build();
+
+        // See the messages
+        connection.on("GetMsg", (user, msg) => {
+            const entry = document.createElement("li");
+            entry.textContent = `${user}: ${msg}`;
+            document.getElementById("msgs").appendChild(entry);
+        });
+
+        // Start connection
+        connection.start()
+            .then(() => console.log("Connected to SignalR"))
+            .catch(err => console.error("Connection Error:", err));
+
+        // Sends msg
+        function sendMsg() {
+            const user = "@Model.UserName";
+            const msg = document.getElementById("msg").value;
+            connection.invoke("SendMsg", user, msg)
+                .catch(err => console.error("Failed to send:", err));
+        }
+    </script>
+}
