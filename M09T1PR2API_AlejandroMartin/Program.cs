@@ -1,4 +1,5 @@
 using M09T1PR2API_AlejandroMartin.Data;
+using M09T1PR2API_AlejandroMartin.HUBs;
 using M09T1PR2API_AlejandroMartin.Model;
 using M09T1PR2API_AlejandroMartin.Tools;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,20 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Afegim política de CORS (cross-origin resource sharing)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:7036"); //Adreça del client Razor
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowCredentials();
+    });
+});
+
+builder.Services.AddSignalR(); // Registrar serveis de SignalR
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -89,6 +104,10 @@ builder.Services.AddSwaggerGen(opt =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 var app = builder.Build();
+
+app.UseCors();
+
+app.MapHub<ChatHub>("/Chat");
 
 using (var scope = app.Services.CreateScope())
 {
