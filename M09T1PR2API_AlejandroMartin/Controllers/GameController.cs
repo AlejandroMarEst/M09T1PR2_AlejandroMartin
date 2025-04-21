@@ -1,6 +1,8 @@
 ﻿using M09T1PR2API_AlejandroMartin.Data;
 using M09T1PR2API_AlejandroMartin.DTOs;
 using M09T1PR2API_AlejandroMartin.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,7 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetAllGames()
         {
@@ -25,7 +28,9 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
             }
             return Ok(gameList);
         }
-        [HttpPost]
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Insert")]
         public async Task<ActionResult<Game>> CreateGame(GameDTO gameDTO)
         {
             Game game = new Game
@@ -39,7 +44,9 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetAllGames), game);
         }
-        [HttpPut]
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Update")]
         public async Task<ActionResult<Game>> UpdateGame(Game game)
         {
             Game gameToUpdate = await _context.Games.FirstOrDefaultAsync(x => x.Id == game.Id);
@@ -50,7 +57,9 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetAllGames), game);
         }
-        [HttpDelete]
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Game>> RemoveGame(Game game)
         {
             _context.Games.Remove(game);
