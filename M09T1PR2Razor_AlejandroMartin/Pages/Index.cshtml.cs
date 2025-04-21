@@ -39,6 +39,6 @@ public class IndexModel : PageModel
     }
     public IActionResult OnPostGameInfo(int id)
     {
-        return RedirectToPage("GameInfo", "Game", new { id = id });
+        return RedirectToPage("GameInfo", new { id = id });
     }
 }
