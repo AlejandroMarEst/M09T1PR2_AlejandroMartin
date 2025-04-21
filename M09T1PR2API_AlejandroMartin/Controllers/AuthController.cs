@@ -61,6 +61,14 @@ namespace M09T1PR2API_AlejandroMartin.Controllers
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles != null && roles.Count > 0)
+            {
+                foreach (var rol in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, rol));
+                }
+            }
             var token = CreateToken(claims.ToArray());
             return Ok(token);
         }
