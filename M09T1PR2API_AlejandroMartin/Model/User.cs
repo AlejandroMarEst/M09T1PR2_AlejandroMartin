@@ -1,16 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace M09T1PR2API_AlejandroMartin.Model
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Aquest camp és obligatori")]
-        public string? Name { get; set; }
-        [Required(ErrorMessage = "Aquest camp és obligatori")]
-        public string? Surname { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 }
